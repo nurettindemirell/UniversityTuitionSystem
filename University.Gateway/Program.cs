@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy
-            .WithOrigins("http://localhost:5099")   // Swagger'ın origin'i
+            .WithOrigins("http://localhost:5207")   // Swagger'ın origin'i
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
