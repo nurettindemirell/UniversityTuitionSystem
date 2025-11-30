@@ -8,29 +8,30 @@ using University.Api;
 using System.Collections.Concurrent;
 using University.Api.RateLimiting;
 
-
 var builder = WebApplication.CreateBuilder(args);
+
+// MVC controllers
 builder.Services.AddControllers();
 
-
-// Rate limit için global store(uygulama çalıştığı süreccce bellekte kalacak )
+// Rate limit için global store (uygulama çalıştığı sürece bellekte kalacak)
 builder.Services.AddSingleton<ConcurrentDictionary<string, RateLimitEntry>>();
 
-
-
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new() { Title = "University Tuition API", Version = "v1" });
-    // GATEWAY URL’ini deployment’ta ekleyeceğiz, şimdilik yok
-
-    options.AddServer(new OpenApiServer
+    options.SwaggerDoc("v1", new()
     {
-        Url = "http://localhost:5207",          // Gateway’in HTTP portu
-        Description = "University API Gateway"
+        Title = "University Tuition API",
+        Version = "v1"
     });
 
-
+    // Local gateway bilgisi – Azure için kritik değil
+    options.AddServer(new OpenApiServer
+    {
+        Url = "http://localhost:5207",
+        Description = "University API Gateway"
+    });
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -56,9 +57,7 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
-
 });
-
 
 // DB
 #if DEBUG
@@ -70,7 +69,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 #endif
-
 
 // JWT
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
@@ -112,15 +110,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-
-// ...
+// Swagger HER ortamda açık
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "University Tuition API v1");
+    // RoutePrefix default olarak "swagger" – yani /swagger çalışır
+    // c.RoutePrefix = "swagger";
 });
-// ...
-
 
 app.UseHttpsRedirection();
 
@@ -128,5 +125,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Sağlık kontrolü: kök URL cevap versin
+app.MapGet("/", () => Results.Ok("University API is running"));
 
 app.Run();
