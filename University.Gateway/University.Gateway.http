@@ -1,0 +1,6 @@
+@University.Gateway_HostAddress = http://localhost:5207
+
+GET {{University.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
