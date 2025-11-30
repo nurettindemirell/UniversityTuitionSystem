@@ -4,7 +4,6 @@ Bu proje, üniversite harç (tuition) yönetimi için **sadece backend API’ler
 Hiç frontend yok, her şey **Swagger** ve/veya **API çağrıları** üzerinden test ediliyor.
 
 Desteklenen client’lar:
-
 - University Mobile App
 - Banking App
 - University Web Admin
@@ -13,7 +12,6 @@ Desteklenen client’lar:
 ---
 
 ## 1. Teknolojiler
-
 - **.NET 8** – ASP.NET Core Web API
 - **Entity Framework Core**
   - DEBUG: InMemory provider
@@ -24,13 +22,12 @@ Desteklenen client’lar:
   - Reverse proxy (`HttpClient`)
   - Rate limiting
   - Logging
-
+  - 
 Proje yapısı (solution klasörü):
-
 - `University.Api`
 - `University.Gateway`
 
----
+-
 
 ## 2. Data Model (ER)
 
@@ -62,15 +59,6 @@ Proje yapısı (solution klasörü):
 
 - 1 Student → N Tuition
 - 1 Student → N Payment
-
-Basit ER gösterimi:
-
-```text
-Student (1) ────< Tuition
-   │
-   └────< Payment
-```
-
 ---
 
 ## 3. Versioning
@@ -96,7 +84,7 @@ Tüm servisler **v1** ile versiyonlanmıştır. Route’lar:
 #### POST `/api/v1/auth/login`
 
 - **Body (JSON):**
-  ```json
+  ```json  //////////////////burada banker,password da mevcut
   {
     "username": "admin",
     "password": "password"
@@ -109,9 +97,9 @@ Tüm servisler **v1** ile versiyonlanmıştır. Route’lar:
 
 - Doğruysa:
   - 1 saat geçerli bir **JWT token** üretir.
-  - Response: `200 OK` + body’de düz string token
+  - Response: `200 OK`+ body’de düz string token
 - Yanlışsa:
-  - `401 Unauthorized`
+  - `401 Unauthorized` atıldı
 
 Bu token, diğer protected endpoint’ler için  
 `Authorization: Bearer <token>` header’ı ile kullanılır.
@@ -126,7 +114,7 @@ Bu token, diğer protected endpoint’ler için
 
 #### 4.2.1 Add Tuition – `POST /api/v1/admin/tuition`
 
-Requirements’teki "Add Tuition – Single" kısmı.
+Requirements’teki "Add TuitionSingle" kısmı.
 
 - **Body:**
   ```json
@@ -157,6 +145,7 @@ Requirements’teki "Add Tuition – Single" kısmı.
     "message": "Tuition added"
   }
   ```
+
 
 #### 4.2.2 Add Tuition – Batch – `POST /api/v1/admin/tuition/batch`
 
@@ -241,6 +230,7 @@ Paging requirement’ı bu endpoint üzerinde sağlanmış durumda.
   }
   ```
 
+
 Bu, requirements’teki "Banking App – Query Tuition – Auth: YES" satırını karşılıyor.
 
 #### 4.3.2 Pay Tuition – `POST /api/v1/banking/pay`
@@ -254,6 +244,7 @@ Bu, requirements’teki "Banking App – Query Tuition – Auth: YES" satırın�
     "amount": 500.0
   }
   ```
+
 
 - Davranış:
   - `studentNo` ve `term` üzerinden tuition bulur.
@@ -269,6 +260,7 @@ Bu, requirements’teki "Banking App – Query Tuition – Auth: YES" satırın�
     "message": "Payment processed"
   }
   ```
+
 
 - **Hata örneği:**
   ```json
@@ -308,14 +300,6 @@ Mobile tarafı için ek bir paging requirement yok.
 ---
 
 ## 5. Authentication Özeti
-
-| Endpoint Grubu             | Auth          |
-|---------------------------|--------------|
-| `/api/v1/auth/login`      | No           |
-| `/api/v1/mobile/*`        | No           |
-| `/api/v1/banking/tuition` | **Yes (JWT)**|
-| `/api/v1/banking/pay`     | No           |
-| `/api/v1/admin/*`         | **Yes (JWT)**|
 
 JWT ayarları `appsettings.json` içinde:
 
