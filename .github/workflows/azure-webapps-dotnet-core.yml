@@ -6,12 +6,12 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: university-tuition-api
-  AZURE_WEBAPP_PACKAGE_PATH: ./publish
+  AZURE_WEBAPP_NAME: university-tuition-api          # Azure Web App adın
+  AZURE_WEBAPP_PACKAGE_PATH: ./publish               # publish çıktısı
   DOTNET_VERSION: '8.0.x'
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,29 +32,9 @@ jobs:
       - name: Publish
         run: dotnet publish University.Api/University.Api.csproj -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: .
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
