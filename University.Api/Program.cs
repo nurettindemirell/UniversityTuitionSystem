@@ -18,6 +18,8 @@ builder.Services.AddSingleton<ConcurrentDictionary<string, RateLimitEntry>>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
+
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new()
@@ -26,12 +28,8 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1"
     });
 
-    // Local gateway bilgisi – Azure için kritik değil
-    options.AddServer(new OpenApiServer
-    {
-        Url = "http://localhost:5207",
-        Description = "University API Gateway"
-    });
+
+    
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
