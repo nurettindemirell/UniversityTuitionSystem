@@ -1,16 +1,14 @@
-# University Tuition System – Midterm Project
+# University Tuition System
 
-Bu proje, üniversite harç (tuition) yönetimi için **sadece backend API’lerinden** oluşan bir sistemdir.  
-Hiç frontend yok, her şey **Swagger** ve/veya **API çağrıları** üzerinden test ediliyor.
+Bu proje üniversite harç yönetimi için **sadece backend API’lerinden** oluşan bir sistemdir.  
+her şey **Swagger** ve/veya **API çağrıları** üzerinden test ediliyor.
 
 Desteklenen client’lar:
 - University Mobile App
 - Banking App
 - University Web Admin
-- Hepsi bir **API Gateway** üzerinden yönetilebilecek şekilde tasarlandı.
-
+- Hepsi bir**API Gateway**üzerinden yönetilebilecek şekilde tasarlandı.
 ---
-
 ## 1. Teknolojiler
 - **.NET 8** – ASP.NET Core Web API
 - **Entity Framework Core**
@@ -26,9 +24,7 @@ Desteklenen client’lar:
 Proje yapısı (solution klasörü):
 - `University.Api`
 - `University.Gateway`
-
 -
-
 ## 2. Data Model (ER)
 
 ### Entity’ler
@@ -62,25 +58,19 @@ Proje yapısı (solution klasörü):
 ---
 
 ## 3. Versioning
-
 Tüm servisler **v1** ile versiyonlanmıştır. Route’lar:
-
 - `/api/v1/auth/...`
 - `/api/v1/admin/...`
 - `/api/v1/banking/...`
 - `/api/v1/mobile/...`
-
 "REST services must be versionable" şartı bu şekilde karşılandı.
-
 ---
 
 ## 4. Endpoint’ler ve Requirements Eşlemesi
 
 ### 4.1 Auth
-
 **Controller:** `AuthController`  
 **Route base:** `/api/v1/auth`  
-
 #### POST `/api/v1/auth/login`
 
 - **Body (JSON):**
@@ -104,7 +94,7 @@ Tüm servisler **v1** ile versiyonlanmıştır. Route’lar:
 Bu token, diğer protected endpoint’ler için  
 `Authorization: Bearer <token>` header’ı ile kullanılır.
 
----
+--
 
 ### 4.2 University Web Admin (AdminTuition)
 
