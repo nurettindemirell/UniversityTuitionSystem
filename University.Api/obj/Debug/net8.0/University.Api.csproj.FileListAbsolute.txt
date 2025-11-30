@@ -140,3 +140,4 @@ C:\Users\hp\Desktop\UniversityTuitionSystem\University.Api\obj\Debug\net8.0\Univ
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Api\obj\Debug\net8.0\University.Api.genruntimeconfig.cache
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Api\obj\Debug\net8.0\ref\University.Api.dll
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Api\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\hp\Desktop\UniversityTuitionSystem\University.Api\obj\Debug\net8.0\University.Api.sourcelink.json

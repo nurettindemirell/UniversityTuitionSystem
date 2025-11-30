@@ -38,3 +38,4 @@ C:\Users\hp\Desktop\UniversityTuitionSystem\University.Gateway\obj\Debug\net9.0\
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Gateway\obj\Debug\net9.0\University.Gateway.pdb
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Gateway\obj\Debug\net9.0\University.Gateway.genruntimeconfig.cache
 C:\Users\hp\Desktop\UniversityTuitionSystem\University.Gateway\obj\Debug\net9.0\ref\University.Gateway.dll
+C:\Users\hp\Desktop\UniversityTuitionSystem\University.Gateway\obj\Debug\net9.0\University.Gateway.sourcelink.json

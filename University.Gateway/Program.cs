@@ -3,16 +3,30 @@ using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// University.Api'nin HTTPS adresi
-// launchSettings.json'daki https portun neyse onu yaz
+// University.Api'nin adresi (Swagger da burada)
 builder.Services.AddHttpClient("backend", client =>
 {
     client.BaseAddress = new Uri("http://localhost:5099");
 });
 
+// CORS: Swagger (5099) -> Gateway (5207) çağırabilsin
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5099")   // Swagger'ın origin'i
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+// CORS middleware (preflight OPTIONS burada handle edilecek)
+app.UseCors();
 
 // -------------------------------------------------------------------
 // 1) MOBILE RATE LIMIT  -> /api/v1/mobile/tuition için
@@ -76,7 +90,8 @@ app.Use(async (context, next) =>
     var responseSize = response.ContentLength ?? 0;
 
     logger.LogInformation(
-        "GW {Method} {Path}{Query} Status={Status} Req={ReqSize} Res={ResSize} Latency={Latency}ms IP={IP} Time={Time} Headers={Headers}",
+        "GW {Method} {Path}{Query} Status={Status} Req={ReqSize} Res={ResSize} " +
+        "Latency={Latency}ms IP={IP} Time={Time} Headers={Headers}",
         request.Method,
         request.Path,
         request.QueryString,
@@ -121,7 +136,8 @@ app.Map("/{**catch-all}", async context =>
         forwardMessage.Content = new StreamContent(request.Body);
         if (request.ContentType != null)
         {
-            forwardMessage.Content.Headers.TryAddWithoutValidation("Content-Type", request.ContentType);
+            forwardMessage.Content.Headers.TryAddWithoutValidation(
+                "Content-Type", request.ContentType);
         }
     }
 
