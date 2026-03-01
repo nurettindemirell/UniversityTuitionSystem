@@ -1,9 +1,12 @@
+# Youtube Presentation Video: [https://www.youtube.com/watch?v=4fNe4JG_8ZY]
+
+
 # University Tuition System
 
 Bu proje üniversite harç yönetimi için **sadece backend API’lerinden** oluşan bir sistemdir.  
-her şey **Swagger** ve/veya **API çağrıları** üzerinden test ediliyor.
+her şey **Swagger** ve/veya **API çağrıları** üzerinden test ediyoruz.
 
-Desteklenen client’lar:
+Desteklenen client lar:
 - University Mobile App
 - Banking App
 - University Web Admin
@@ -25,6 +28,8 @@ Proje yapısı (solution klasörü):
 - `University.Api`
 - `University.Gateway`
 -
+
+
 ## 2. Data Model (ER)
 
 ### Entity’ler
@@ -51,8 +56,9 @@ Proje yapısı (solution klasörü):
 - `Amount` (decimal)
 - `PaymentDate` (DateTime)
 
-### İlişkiler
 
+### İlişkiler
+-
 - 1 Student → N Tuition
 - 1 Student → N Payment
 ---
@@ -88,7 +94,8 @@ Tüm servisler **v1** ile versiyonlanmıştır. Route’lar:
 - Doğruysa:
   - 1 saat geçerli bir **JWT token** üretir.
   - Response: `200 OK`+ body’de düz string token
-- Yanlışsa:
+  - 
+- Yanlışssa  :
   - `401 Unauthorized` atıldı
 
 Bu token, diğer protected endpoint’ler için  
